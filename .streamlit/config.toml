@@ -1,0 +1,20 @@
+[server]
+# Disable Streamlit's file watcher entirely.
+#
+# Why: Streamlit's watcher scans every imported module at startup to watch for
+# hot-reload changes.  When it introspects the `transformers` package (pulled in
+# by sentence-transformers for our NLI model), it tries to lazy-load 50+
+# image-processing submodules that all require `torchvision` — a computer-vision
+# library we do not use or need.  This produces a flood of identical
+# ModuleNotFoundError messages in the terminal before the app even starts.
+#
+# Setting fileWatcherType = "none" stops Streamlit from scanning site-packages
+# and eliminates all those errors.  Hot-reload is not needed for a demo /
+# submission run of this project.
+fileWatcherType = "none"
+
+[browser]
+# Suppress the "you can now view your app" prompt from opening a browser
+# automatically in headless / CI environments.  Comment this out if you want
+# the browser to open automatically when you run the app.
+# gatherUsageStats = false
